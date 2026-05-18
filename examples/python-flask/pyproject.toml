@@ -1,0 +1,28 @@
+[project]
+name = "flask-api"
+version = "0.1.0"
+description = "Example Flask API for pi-verify-all"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=24.0",
+    "ruff>=0.3",
+    "pytest>=8.0",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

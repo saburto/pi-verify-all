@@ -1,0 +1,36 @@
+{
+  "steps": [
+    {
+      "name": "Install deps",
+      "run": "uv sync --frozen"
+    },
+    {
+      "name": "Format check (black)",
+      "run": "uv run black --check --diff ."
+    },
+    {
+      "name": "Lint (ruff)",
+      "run": "uv run ruff check ."
+    },
+    {
+      "name": "Unit tests (pytest)",
+      "run": "uv run pytest tests/ -v"
+    },
+    {
+      "name": "Stop existing app",
+      "run": "lsof -ti:5000 | xargs kill 2>/dev/null || true"
+    },
+    {
+      "name": "Start Flask app",
+      "run": "uv run flask run --port=5000",
+      "background": true,
+      "healthCheck": "http://localhost:5000/health",
+      "healthTimeout": 10
+    },
+    {
+      "name": "API tests (hurl)",
+      "run": "hurl --test hurl/api.hurl"
+    }
+  ],
+  "maxRetries": 3
+}
