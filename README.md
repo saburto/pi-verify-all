@@ -9,7 +9,7 @@ Configurable verify pipeline extension for [pi coding agent](https://github.com/
 ## Install
 
 ```bash
-pi install npm:@saburto/pi-verify-all
+pi install git:github.com/saburto/pi-verify-all
 ```
 
 ## Quick Start

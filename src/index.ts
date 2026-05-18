@@ -34,10 +34,15 @@ export default function (pi: ExtensionAPI) {
       } else {
         state.retryCount++;
         state.pendingReRun = true;
+        const details = result.errorDetails ? `
+
+${result.errorDetails}` : "";
         return {
           content: [{
             type: "text",
-            text: `Verify failed at "${result.failedStep}": ${result.errorLine}\nLogs: ${result.logPath}\nFix the issue and call run_verify again.`,
+            text: `Verify failed at "${result.failedStep}": ${result.errorLine}${details}
+Logs: ${result.logPath}
+Fix the issue and call run_verify again.`,
           }],
         };
       }
@@ -70,15 +75,17 @@ export default function (pi: ExtensionAPI) {
           try { await runCommand(state.onExhausted, ctx.cwd, {}, out); } catch { /* best-effort */ }
         }
 
+        const exDetails = result.errorDetails ? `\n\n${result.errorDetails}` : "";
         pi.sendUserMessage(
           `Verify pipeline failed ${state.maxRetries} times — giving up.\n` +
-          `Last error: ${result.errorLine}\nLogs: ${result.logPath}`,
+          `Last error: ${result.errorLine}${exDetails}\nLogs: ${result.logPath}`,
         );
       } else {
         const attempt = state.retryCount > 1 ? ` (attempt ${state.retryCount}/${state.maxRetries})` : "";
         state.pendingReRun = true;
+        const retryDetails = result.errorDetails ? `\n\n${result.errorDetails}` : "";
         pi.sendUserMessage(
-          `Verify pipeline failed${attempt} at "${result.failedStep}": ${result.errorLine}\n` +
+          `Verify pipeline failed${attempt} at "${result.failedStep}": ${result.errorLine}${retryDetails}\n` +
           `Logs: ${result.logPath}\nFix the issue — verify re-runs automatically.`,
         );
       }
@@ -105,9 +112,14 @@ export default function (pi: ExtensionAPI) {
       } else {
         state.retryCount++;
         state.pendingReRun = true;
+        const details = result.errorDetails ? `
+
+${result.errorDetails}` : "";
         pi.sendUserMessage(
-          `Verify pipeline failed at "${result.failedStep}": ${result.errorLine}\n` +
-          `Logs: ${result.logPath}\nFix the issue — verify re-runs automatically.`,
+          `Verify pipeline failed at "${result.failedStep}": ${result.errorLine}${details}` +
+          `
+Logs: ${result.logPath}
+Fix the issue — verify re-runs automatically.`,
         );
       }
     },
