@@ -2,6 +2,10 @@
 
 Configurable verify pipeline extension for [pi coding agent](https://github.com/earendil-works/pi-coding-agent). Define your verification steps in a JSON file and run them with `/verify` — get a live progress widget above the editor with step-by-step status.
 
+## Demo
+
+![demo](demo.gif)
+
 ## Install
 
 ```bash
@@ -29,6 +33,8 @@ Then in pi, run:
 ```
 
 The agent can also call `run_verify` as a tool. After a failure, the pipeline auto-retries when the agent fixes the issue.
+
+Check out [`examples/python-flask`](examples/python-flask) for a full working project with background processes, health checks, and multi-tool CI.
 
 ## Configuration
 
