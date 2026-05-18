@@ -23,4 +23,7 @@ export const state = {
 
   /** Max auto-retry attempts (from config, default 5). */
   maxRetries: 5,
+
+  /** Command to run when retries are exhausted (from config). */
+  onExhausted: null as string | null,
 };

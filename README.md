@@ -40,6 +40,7 @@ Config file is searched in order: `.pi/verify.json`, then `verify.json`.
 |-------|------|----------|---------|-------------|
 | `steps` | array | ✅ | — | Array of step objects |
 | `maxRetries` | number | ❌ | `5` | Max automatic retry attempts after failure |
+| `onExhausted` | string | ❌ | — | Shell command to run when all retries fail (e.g. Slack notification) |
 
 ### Step fields
 
@@ -153,7 +154,20 @@ The agent can call `run_verify` to trigger the pipeline programmatically.
 
 ## Auto-retry
 
-When a step fails, the extension watches for `agent_end`. After the agent finishes its turn (presumably fixing the issue), the pipeline re-runs automatically — up to 5 attempts. If it keeps failing, the extension gives up and notifies you.
+When a step fails, the extension watches for `agent_end`. After the agent finishes its turn (presumably fixing the issue), the pipeline re-runs automatically — up to `maxRetries` attempts (default 5). If it keeps failing, the extension gives up, runs `onExhausted` (if configured), and notifies you.
+
+### Example: with retry config and onExhausted
+
+```json
+{
+  "maxRetries": 3,
+  "onExhausted": "curl -X POST -H 'Content-Type: application/json' -d '{\"text\":\"Verify pipeline exhausted retries!\"}' https://hooks.slack.com/services/T.../B.../...",
+  "steps": [
+    { "name": "TypeScript check", "run": "npx tsc --noEmit" },
+    { "name": "Unit tests", "run": "npx vitest run" }
+  ]
+}
+```
 
 ## Logs
 

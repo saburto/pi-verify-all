@@ -22,6 +22,8 @@ export interface VerifyConfig {
   steps: VerifyStep[];
   /** Maximum auto-retry attempts after failure. Default 5. */
   maxRetries?: number;
+  /** Shell command to run when all retries are exhausted (e.g. a notification). */
+  onExhausted?: string;
 }
 
 // ── Runtime state ─────────────────────────────────────────────

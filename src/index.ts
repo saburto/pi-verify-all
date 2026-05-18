@@ -1,9 +1,9 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 import { state } from "./state.js";
-import { bold, green, red } from "./terminal.js";
+import { bold, green, red, dim } from "./terminal.js";
 import { runPipeline } from "./pipeline.js";
-import { killAll } from "./commands.js";
+import { killAll, runCommand } from "./commands.js";
 
 // ── Extension ──────────────────────────────────────────────────
 
@@ -62,6 +62,14 @@ export default function (pi: ExtensionAPI) {
       state.retryCount++;
       if (state.retryCount > state.maxRetries) {
         state.retryCount = 0;
+
+        // Run onExhausted command if configured
+        if (state.onExhausted) {
+          ctx.ui.setWidget("verify-pipeline", [dim(" ══ Verify EXHAUSTED — running onExhausted…")]);
+          const out: string[] = [];
+          try { await runCommand(state.onExhausted, ctx.cwd, {}, out); } catch { /* best-effort */ }
+        }
+
         pi.sendUserMessage(
           `Verify pipeline failed ${state.maxRetries} times — giving up.\n` +
           `Last error: ${result.errorLine}\nLogs: ${result.logPath}`,

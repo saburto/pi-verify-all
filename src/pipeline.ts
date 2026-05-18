@@ -18,6 +18,7 @@ export async function runPipeline(
 
   const config = loadConfig(cwd);
   state.maxRetries = config?.maxRetries ?? 5;
+  state.onExhausted = config?.onExhausted ?? null;
 
   if (!config || !config.steps || config.steps.length === 0) {
     return {
