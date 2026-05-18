@@ -28,9 +28,6 @@ jobs:
 
       - run: npm ci
 
-      - name: Install peer dependency (for TypeScript check)
-        run: npm install --no-save @earendil-works/pi-coding-agent
-
       - name: TypeScript check
         run: npx tsc --noEmit --project tsconfig.verify.json
 
