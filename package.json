@@ -1,0 +1,15 @@
+{
+  "name": "@saburto/pi-verify-all",
+  "version": "1.0.0",
+  "description": "Configurable verify pipeline for pi coding agent — define steps in .pi/verify.json and run /verify to see live progress",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "files": ["src/", "README.md"],
+  "pi": {
+    "extensions": ["./src/index.ts"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  }
+}
