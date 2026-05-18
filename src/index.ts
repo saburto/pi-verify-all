@@ -1,6 +1,6 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
-import { state, MAX_RETRIES } from "./state.js";
+import { state } from "./state.js";
 import { bold, green, red } from "./terminal.js";
 import { runPipeline } from "./pipeline.js";
 import { killAll } from "./commands.js";
@@ -60,14 +60,14 @@ export default function (pi: ExtensionAPI) {
       setTimeout(() => ctx.ui.setWidget("verify-pipeline", []), 8000);
     } else {
       state.retryCount++;
-      if (state.retryCount > MAX_RETRIES) {
+      if (state.retryCount > state.maxRetries) {
         state.retryCount = 0;
         pi.sendUserMessage(
-          `Verify pipeline failed ${MAX_RETRIES} times — giving up.\n` +
+          `Verify pipeline failed ${state.maxRetries} times — giving up.\n` +
           `Last error: ${result.errorLine}\nLogs: ${result.logPath}`,
         );
       } else {
-        const attempt = state.retryCount > 1 ? ` (attempt ${state.retryCount}/${MAX_RETRIES})` : "";
+        const attempt = state.retryCount > 1 ? ` (attempt ${state.retryCount}/${state.maxRetries})` : "";
         state.pendingReRun = true;
         pi.sendUserMessage(
           `Verify pipeline failed${attempt} at "${result.failedStep}": ${result.errorLine}\n` +

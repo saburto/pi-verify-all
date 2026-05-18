@@ -34,6 +34,13 @@ The agent can also call `run_verify` as a tool. After a failure, the pipeline au
 
 Config file is searched in order: `.pi/verify.json`, then `verify.json`.
 
+### Top-level fields
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `steps` | array | ✅ | — | Array of step objects |
+| `maxRetries` | number | ❌ | `5` | Max automatic retry attempts after failure |
+
 ### Step fields
 
 | Field | Type | Required | Default | Description |

@@ -20,6 +20,8 @@ export interface VerifyStep {
 
 export interface VerifyConfig {
   steps: VerifyStep[];
+  /** Maximum auto-retry attempts after failure. Default 5. */
+  maxRetries?: number;
 }
 
 // ── Runtime state ─────────────────────────────────────────────

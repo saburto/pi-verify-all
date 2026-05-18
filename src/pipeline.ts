@@ -17,6 +17,8 @@ export async function runPipeline(
   killAll();
 
   const config = loadConfig(cwd);
+  state.maxRetries = config?.maxRetries ?? 5;
+
   if (!config || !config.steps || config.steps.length === 0) {
     return {
       success: false,

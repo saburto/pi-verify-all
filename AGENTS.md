@@ -21,7 +21,7 @@ src/
 - **State** (`state.ts`): singleton mutable object shared across the module. Tracks running processes, background processes, retry count, pending re-run flag, spinner index, and the widget refresh timer.
 - **Pipeline** (`pipeline.ts`): runs each step sequentially. Supports conditional steps, background processes with health checks, timeouts, and `continueOnFail`. Collects results with elapsed times and error info.
 - **Widget** (`widget.ts`): pure function that builds the widget lines from step info. Uses ANSI escape codes for colors (cyan, green, red, yellow, dim). Shows spinner animation when running.
-- **Auto-retry**: after a failure, sets `pendingReRun = true`. On `agent_end`, if the flag is set, re-runs the pipeline automatically (up to `MAX_RETRIES = 5` attempts).
+- **Auto-retry**: after a failure, sets `pendingReRun = true`. On `agent_end`, if the flag is set, re-runs the pipeline automatically (up to `maxRetries` from config, default 5). Configurable via `maxRetries` field in `.pi/verify.json`.
 
 ## Widget Lifecycle
 

@@ -20,7 +20,7 @@ export const state = {
 
   /** Current spinner frame index. */
   spinIdx: 0,
-};
 
-/** Maximum number of auto-retry attempts before giving up. */
-export const MAX_RETRIES = 5;
+  /** Max auto-retry attempts (from config, default 5). */
+  maxRetries: 5,
+};
