@@ -1,0 +1,12 @@
+{
+  "steps": [
+    {
+      "name": "TypeScript check",
+      "run": "npx tsc --noEmit --project tsconfig.verify.json"
+    },
+    {
+      "name": "Unit tests",
+      "run": "npx vitest run"
+    }
+  ]
+}

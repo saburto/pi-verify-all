@@ -2,14 +2,33 @@
   "name": "@saburto/pi-verify-all",
   "version": "1.0.0",
   "description": "Configurable verify pipeline for pi coding agent — define steps in .pi/verify.json and run /verify to see live progress",
-  "keywords": ["pi-package"],
+  "keywords": [
+    "pi-package"
+  ],
   "license": "MIT",
-  "files": ["src/", "README.md"],
+  "files": [
+    "src/",
+    "README.md"
+  ],
   "pi": {
-    "extensions": ["./src/index.ts"]
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  },
+  "dependencies": {
+    "typebox": "^1.1.38"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
     "typebox": "*"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
   }
 }
